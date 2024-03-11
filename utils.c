@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:32:24 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/08 18:03:16 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/11 15:08:04 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,33 @@ void	get_path(char **envp, t_pipe *pipex)
 		{
 			pipex->path_str = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 			if (!pipex->path_str)
-				ft_exit_error("malloc() error1 ", pipex);
+				ft_exit_error("");
 		}
 		i++;
 	}
 	pipex->path_arr = ft_split(pipex->path_str, ':');
 	if (!pipex->path_arr)
-		ft_exit_error("malloc() error2 ", pipex);
+	{
+		free(pipex->path_str);
+		ft_exit_error("");
+	}
+	free(pipex->path_str);
 }
 
-void	check_cmd(char *cmd, t_pipe *pipex)
+void	create_cmd_path(t_pipe *pipex)
 {
 	int	i;
 
 	i = 0;
-	pipex->cmd_arr = ft_split(cmd, ' ');
-	if (!pipex->cmd_arr)
-		ft_exit_error("malloc() error3 ", pipex);
 	while (pipex->path_arr[i])
 	{
-		pipex->cmd_path = ft_tripjoin(pipex->path_arr[i], "/", pipex->cmd_arr[0]);
+		pipex->cmd_path = tripjoin(pipex->path_arr[i], "/", pipex->cmd_arr[0]);
 		if (!pipex->cmd_path)
-			ft_exit_error("malloc() error4 ", pipex);
+		{
+			ft_free_array(pipex->cmd_arr);
+			ft_free_array(pipex->path_arr);
+			ft_exit_error("");
+		}
 		if (access(pipex->cmd_path, F_OK) == 0)
 			break ;
 		i++;
@@ -52,16 +57,31 @@ void	check_cmd(char *cmd, t_pipe *pipex)
 	}
 }
 
-void	execute(char *cmd, char **envp, t_pipe *pipex)
-{ 
+void	check_cmd(char *cmd, t_pipe *pipex)
+{
+	pipex->cmd_arr = ft_split(cmd, ' ');
+	if (!pipex->cmd_arr)
+	{
+		ft_free_array(pipex->path_arr);
+		ft_exit_error("");
+	}
+	if (access(pipex->cmd_arr[0], F_OK) == 0)
+		pipex->cmd_path = pipex->cmd_arr[0];
+	else
+		create_cmd_path(pipex);
+}
 
+void	execute(char *cmd, char **envp, t_pipe *pipex)
+{
 	get_path(envp, pipex);
 	check_cmd(cmd, pipex);
 	if (execve(pipex->cmd_path, pipex->cmd_arr, envp) < 0)
-		ft_exit_error("command not found ", pipex);
+		ft_exit_error(pipex->cmd_arr[0]);
+	free(pipex->cmd_path);
+	ft_free_array(pipex->cmd_arr);
 }
 
-char	*ft_tripjoin(char const *s1, char const *s2, char const *s3)
+char	*tripjoin(char const *s1, char const *s2, char const *s3)
 {
 	size_t	i;
 	size_t	j;
