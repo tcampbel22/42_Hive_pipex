@@ -12,7 +12,7 @@ SRC_DIR = .
 LIBFT_DIR = ./libft
 
 #---------------------------------Source Files--------------------------------#
-SRC_FLS = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/utils.c
+SRC_FLS = 	$(SRC_DIR)/pipex.c $(SRC_DIR)/utils.c 
 
 #---------------------------------Colours-------------------------------------#
 GREEN= \033[1;32m

@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:19:05 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/08 16:39:38 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:30:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,16 @@ typedef struct s_list
 	void			*content;
 	struct s_list	*next;
 }	t_list;
+
+typedef struct s_split
+{
+	char	**str;
+	size_t	start;
+	size_t	end;
+	size_t	len;
+	size_t	i;
+}	t_split;
+
 int		ft_isalnum(int c);
 int		ft_isalpha(int c);
 int		ft_isdigit(int c);
@@ -67,4 +77,6 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 void	ft_free_array(char **str);
+char	**ft_skip_split(char const *s, char c, char q);
+char	*tripjoin(char const *s1, char const *s2, char const *s3);
 #endif

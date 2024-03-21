@@ -6,7 +6,7 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/26 10:39:32 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/11 14:36:36 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/21 13:45:33 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define PIPEX_H
 
 # include "libft/includes/libft.h"
-# include <sys/wait.h>
 # include <stdio.h>
 # include <unistd.h>
 # include <fcntl.h>
