@@ -6,11 +6,25 @@
 /*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:32:24 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/11 15:08:04 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/21 14:37:44 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+void	is_dir(t_pipe *pipex)
+{
+	int	fd;
+
+	fd = open(pipex->cmd_arr[0], O_RDONLY);
+	if (fd >= 0)
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(pipex->cmd_arr[0], 2);
+		ft_putstr_fd(": is a directory\n", 2);
+		exit(127);
+	}
+}
 
 void	get_path(char **envp, t_pipe *pipex)
 {
@@ -59,7 +73,10 @@ void	create_cmd_path(t_pipe *pipex)
 
 void	check_cmd(char *cmd, t_pipe *pipex)
 {
-	pipex->cmd_arr = ft_split(cmd, ' ');
+	if (ft_strchr(cmd, '\"'))
+		pipex->cmd_arr = ft_skip_split(cmd, ' ', '\"');
+	else
+		pipex->cmd_arr = ft_skip_split(cmd, ' ', '\'');
 	if (!pipex->cmd_arr)
 	{
 		ft_free_array(pipex->path_arr);
@@ -75,33 +92,14 @@ void	execute(char *cmd, char **envp, t_pipe *pipex)
 {
 	get_path(envp, pipex);
 	check_cmd(cmd, pipex);
+	is_dir(pipex);
 	if (execve(pipex->cmd_path, pipex->cmd_arr, envp) < 0)
-		ft_exit_error(pipex->cmd_arr[0]);
+	{
+		ft_putstr_fd("pipex: ", 2);
+		ft_putstr_fd(pipex->cmd_arr[0], 2);
+		ft_putstr_fd(": command not found\n", 2);
+		exit(127);
+	}
 	free(pipex->cmd_path);
 	ft_free_array(pipex->cmd_arr);
-}
-
-char	*tripjoin(char const *s1, char const *s2, char const *s3)
-{
-	size_t	i;
-	size_t	j;
-	size_t	k;
-	char	*s4;
-
-	i = -1;
-	j = -1;
-	k = -1;
-	if (!s1 || !s2 || !s3)
-		return (NULL);
-	s4 = (char *)malloc((ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1));
-	if (!s4)
-		return (NULL);
-	while (s1[++i])
-		s4[i] = s1[i];
-	while (s2[++j])
-		s4[i++] = s2[j];
-	while (s3[++k])
-		s4[i++] = s3[k];
-	s4[i] = '\0';
-	return (s4);
 }
