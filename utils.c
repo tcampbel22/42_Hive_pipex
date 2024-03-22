@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/07 15:32:24 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/21 14:37:44 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:13:19 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "pipex.h"
 

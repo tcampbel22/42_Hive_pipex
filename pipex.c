@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/25 15:49:19 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/21 14:37:46 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:13:36 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	create_process(char **av, char **envp, t_pipe *pipex)
 		second_command(av, envp, pipex);
 	close(pipex->fd[0]);
 	close(pipex->fd[1]);
-	if ((waitpid(pid1, &e_status, 0) < 0) || (waitpid(pid2, &e_status, 0) < 0))
+	if ((waitpid(pid1, NULL, 0) < 0) || (waitpid(pid2, &e_status, 0) < 0))
 		ft_exit_error("");
 	exit(WEXITSTATUS(e_status));
 }
