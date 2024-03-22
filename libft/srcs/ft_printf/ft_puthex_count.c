@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_puthex_count.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/20 18:42:09 by tcampbel          #+#    #+#             */
-/*   Updated: 2023/12/12 10:45:34 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/22 10:21:23 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	hex_counter(unsigned long nb)
 	return (count);
 }
 
-int	ft_puthex_count(unsigned long nb, char flag, int *ptr)
+int	ft_puthex_count(unsigned long nb, char flag, int *ptr, int fd)
 {
 	char	*dict;
 
@@ -35,14 +35,14 @@ int	ft_puthex_count(unsigned long nb, char flag, int *ptr)
 	if (nb < 16)
 	{
 		if (flag == 'X' && dict[nb] >= 97 && dict[nb] <= 102)
-			ft_putchar_count(dict[nb] - 32, ptr);
+			ft_putchar_count(dict[nb] - 32, ptr, fd);
 		else
-			ft_putchar_count(dict[nb], ptr);
+			ft_putchar_count(dict[nb], ptr, fd);
 	}
 	else
 	{
-		ft_puthex_count(nb / 16, flag, ptr);
-		ft_puthex_count(nb % 16, flag, ptr);
+		ft_puthex_count(nb / 16, flag, ptr, fd);
+		ft_puthex_count(nb % 16, flag, ptr, fd);
 	}
 	return (hex_counter(nb));
 }

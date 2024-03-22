@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tcampbel <tcampbel@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: tcampbel <tcampbel@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 17:42:43 by tcampbel          #+#    #+#             */
-/*   Updated: 2024/03/07 16:12:51 by tcampbel         ###   ########.fr       */
+/*   Updated: 2024/03/22 11:37:09 by tcampbel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,5 @@ char	*ft_strnstr(const char *hay, const char *needle, size_t n)
 		j = 0;
 		n--;
 	}
-	return (0);
+	return (NULL);
 }
